@@ -1,0 +1,18 @@
+USE aidetect;
+
+CREATE TABLE users (
+	idx INT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    name VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    url VARCHAR(200)
+);
+
+CREATE TABLE posts (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    useridx INT NOT NULL,
+    createAt DATETIME DEFAULT NOW(),
+    text VARCHAR(2000) NOT NULL,
+    FOREIGN KEY(useridx) REFERENCES users(idx)
+);
