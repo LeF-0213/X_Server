@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import * as authRepository from "../data/auth.mjs";
-import {config} from "../config.mjs"
+import { config } from "../config.mjs";
 
 const AUTH_ERROR = { message: "인증 에러" };
 
@@ -31,7 +31,7 @@ export const isAuth = async (req, res, next) => {
     }
     console.log("user.id: ", user.id);
     console.log("user.userid: ", user.userid);
-    req.userid = user.userid;
+    req.id = user.id;
     next();
   });
 };
