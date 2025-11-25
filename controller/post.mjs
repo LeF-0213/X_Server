@@ -22,8 +22,9 @@ export async function getPost(req, res, next) {
 
 // 포스트를 작성하는 함수
 export async function createPost(req, res, next) {
-  const { userid, name, text } = req.body;
-  const post = await postRepository.create(userid, name, text);
+  const text = req.body;
+  console.log("req.idx: ", req.idx);
+  const post = await postRepository.create(text, req.idx);
   res.status(201).json(post);
 }
 
@@ -35,7 +36,7 @@ export async function updatePost(req, res, next) {
   if (post) {
     res.status(201).json(post);
   } else {
-    res.status(404).json({message: `${id}의 포스트가 없습니다.`})
+    res.status(404).json({ message: `${id}의 포스트가 없습니다.` });
   }
 }
 

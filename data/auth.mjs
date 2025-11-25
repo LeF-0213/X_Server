@@ -41,31 +41,35 @@ let users = [
   },
 ];
 
-export async function createUser(userid, password, name, email) {
-  const user = {
-    id: Date.now().toString(),
-    userid,
-    password,
-    name,
-    email,
-    url: "https://randomuser.me/api/portraits/men/29.jpg",
-  };
-  users = [user, ...users];
-  return user;
+import { db } from "../db/database.mjs";
+
+export async function createUser(user) {
+  const { userid, password, name, email, url } = user;
+  return db
+    .execute(
+      "INSERT INTO users (userid, password, name, email, url) VALUES (?, ?, ?, ?, ?)",
+      [userid, password, name, email, url]
+    )
+    .then((result) => result[0].insertId);
 }
 
-export async function login(userid, password) {
-  const user = users.find(
-    (user) => user.userid === userid && user.password === password
-  );
-  return user;
-}
+// export async function login(userid, password) {
+//   const user = users.find(
+//     (user) => user.userid === userid && user.password === password
+//   );
+//   return user;
+// }
 
 export async function findByUserid(userid) {
-  const user = users.find((user) => user.userid == userid);
-  return user;
+  return db
+    .execute("SELECT idx, password FROM users WHERE userid=?", [userid])
+    .then((result) => {
+      return result[0][0];
+    });
 }
 
-export async function findById(id) {
-  return users.find((user) => user.id === id);
+export async function findById(idx) {
+  return db
+    .execute("SELECT idx, userid FROM users WHERE idx=?", [idx])
+    .then((result) => result[0][0]);
 }
