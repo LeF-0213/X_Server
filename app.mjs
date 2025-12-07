@@ -16,4 +16,7 @@ app.use((req, res, next) => {
 });
 
 // db.getConnection().then((connection) => console.log(connection));
-app.listen(config.host.port);
+// 프론트에서 오는 요청을 듣는다.
+app.listen(config.host.port, () => {
+  "서버 실행 중"
+});

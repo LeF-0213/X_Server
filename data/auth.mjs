@@ -63,7 +63,7 @@ export async function createUser(user) {
 export async function findByUserid(userid) {
   return db
     .execute("SELECT idx, password FROM users WHERE userid=?", [userid])
-    .then((result) => {
+    .then((result) => {      
       return result[0][0];
     });
 }
